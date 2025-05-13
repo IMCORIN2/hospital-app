@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function TopNav() {
     const navigate = useNavigate();
     const sections = ['home', 'about', 'services', 'contact'];
-    const [textColor, setTextColor] = useState('#000'); // 기본 검정색
+    const [textColor, setTextColor] = useState('#fff'); // 기본 검정색
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,9 +17,9 @@ function TopNav() {
                     if (scrollPos >= offsetTop && scrollPos < offsetBottom) {
                         // 나중에 필요 시 섹션별로 조건 추가
                         if (section === 'someFutureBrightBackgroundSection') {
-                            setTextColor('#fff'); // 흰색 글자 (향후 필요 시 사용)
+                            setTextColor('#000'); // 흰색 글자 (향후 필요 시 사용)
                         } else {
-                            setTextColor('#000'); // 검은색 글자 (현재 기본값)
+                            setTextColor('#fff'); // 검은색 글자 (현재 기본값)
                         }
                         break;
                     }

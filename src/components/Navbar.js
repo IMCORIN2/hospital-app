@@ -48,7 +48,7 @@ function Navbar() {
                     onClick={() => scrollToSection(section)}
                     style={{
                         ...dotStyle,
-                        backgroundColor: activeSection === section ? '#333' : '#bbb',
+                        backgroundColor: activeSection === section ? 'rgba(13, 55, 32, 0.8)' : '#bbb',
                         transform: activeSection === section ? 'scale(1.4)' : 'scale(1)',
                         transition: 'transform 0.3s, background-color 0.3s',
                     }}
@@ -74,7 +74,7 @@ const dotStyle = {
     height: '12px',
     borderRadius: '50%',
     cursor: 'pointer',
-    backgroundColor: '#bbb',
+    backgroundColor: '#bbb', // 기본 색상
 };
 
 export default Navbar;
