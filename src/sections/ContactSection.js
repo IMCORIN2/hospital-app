@@ -1,11 +1,62 @@
-import React from 'react';
-import homeBackground from '../assets/images/background2.jpg';
+import React, { useEffect, useState, useRef } from 'react';
+import homeBackground from '../assets/images/background2.jpg'; // 이미지 import
 
 function ContactSection() {
+    const sectionRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true); // 화면에 섹션이 보이면 상태를 true로 설정
+                } else {
+                    setIsVisible(false); // 화면에서 섹션이 벗어나면 다시 false로 설정
+                }
+            },
+            { threshold: 0.5 } // 50% 이상 보일 때 트리거
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
     return (
-        <section id="home" style={{ ...sectionStyle, backgroundImage: `url(${homeBackground})` }}>
-            <h3 style={h3Style}>Fill up your beauty</h3>
-            <h4 style={h4Style}>당신의 아름다움, 차오르다</h4>
+        <section id="contact" ref={sectionRef} style={{ ...sectionStyle, backgroundImage: `url(${homeBackground})` }}>
+            {/* 애니메이션 정의 */}
+            <style>
+                {`
+                    @keyframes fadeIn {
+                        0% {
+                            opacity: 0;
+                        }
+                        100% {
+                            opacity: 1;
+                        }
+                    }
+
+                    .fadeInText {
+                        animation: fadeIn 2s ease-in-out forwards;
+                    }
+                    .fadeInTextDelayed {
+                        animation: fadeIn 3s ease-in-out forwards;
+                    }
+                `}
+            </style>
+
+            <h3 className={isVisible ? 'fadeInText' : ''} style={h3Style}>
+                Fill up your beauty
+            </h3>
+            <h4 className={isVisible ? 'fadeInTextDelayed' : ''} style={h4Style}>
+                당신의 아름다움, 차오르다
+            </h4>
         </section>
     );
 }
@@ -21,6 +72,7 @@ const sectionStyle = {
     backgroundSize: 'cover', // 배경 이미지가 섹션을 가득 채움
     backgroundPosition: 'center', // 이미지가 섹션 중앙에 위치
     backgroundRepeat: 'no-repeat', // 이미지 반복 방지
+    overflow: 'hidden', // 섹션의 넘치는 콘텐츠를 숨김
 };
 
 const h3Style = {

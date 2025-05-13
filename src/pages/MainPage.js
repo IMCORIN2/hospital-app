@@ -3,7 +3,7 @@ import HomeSection from '../sections/HomeSection';
 import AboutSection from '../sections/AboutSection';
 import ServicesSection from '../sections/ServicesSection';
 import ContactSection from '../sections/ContactSection';
-import Navbar from '../components/Navbar.js'; // 상단 내비게이션 (필요 없으면 빼도 돼)
+import Navbar from '../components/Navbar'; // 상단 내비게이션 (필요 없으면 빼도 돼)
 
 function MainPage() {
     // 버튼 클릭 시 섹션으로 부드럽게 이동

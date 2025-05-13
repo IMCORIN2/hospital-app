@@ -1,11 +1,61 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import homeBackground from '../assets/images/background1.jpg'; // 이미지 import
 
 function HomeSection() {
+    const sectionRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    // IntersectionObserver를 설정하여 섹션이 보일 때마다 애니메이션을 다시 시작하게 함
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true); // 화면에 섹션이 보일 때 상태를 true로 설정
+                } else {
+                    setIsVisible(false); // 화면에서 섹션이 벗어나면 다시 false로 설정
+                }
+            },
+            { threshold: 0.5 } // 50% 이상 보일 때 트리거
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
     return (
-        <section id="home" style={{ ...sectionStyle, backgroundImage: `url(${homeBackground})` }}>
-            <h3 style={h3Style}>진심이 차오르다</h3>
-            <h4 style={h4Style}>
+        <section id="home" ref={sectionRef} style={{ ...sectionStyle, backgroundImage: `url(${homeBackground})` }}>
+            {/* 애니메이션 정의 */}
+            <style>
+                {`
+          @keyframes fadeIn {
+            0% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+
+          .fadeInText {
+            animation: fadeIn 2s ease-in-out forwards;
+          }
+          .fadeInTextDelayed {
+            animation: fadeIn 3s ease-in-out forwards;
+          }
+        `}
+            </style>
+
+            <h3 className={isVisible ? 'fadeInText' : ''} style={h3Style}>
+                진심이 차오르다
+            </h3>
+            <h4 className={isVisible ? 'fadeInTextDelayed' : ''} style={h4Style}>
                 우리는 정직과 실력을 바탕으로 불필요한 시술은 권하지 않으며,
                 <br />
                 진심으로 소통하여 바르게 진료하고, 건강하게 케어합니다.
@@ -25,6 +75,7 @@ const sectionStyle = {
     backgroundSize: 'cover', // 배경 이미지가 섹션을 가득 채움
     backgroundPosition: 'center', // 이미지가 섹션 중앙에 위치
     backgroundRepeat: 'no-repeat', // 이미지 반복 방지
+    overflow: 'hidden', // 섹션의 넘치는 콘텐츠를 숨김
 };
 
 const h3Style = {

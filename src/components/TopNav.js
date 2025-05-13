@@ -35,7 +35,7 @@ function TopNav() {
         <nav style={navStyle}>
             {['/', '/intro', '/solution', '/before-after', '/event'].map((path, index) => (
                 <span key={path} onClick={() => navigate(path)} style={{ ...linkStyle, color: textColor }}>
-                    {['홈', '병원소개', '피부교정 솔루션', '시술 전후', '이벤트'][index]}
+                    {['홈', '차오르다', '피부교정 솔루션', '시술 전후', '이벤트'][index]}
                 </span>
             ))}
         </nav>
@@ -61,6 +61,10 @@ const linkStyle = {
     fontSize: '1rem',
     cursor: 'pointer',
     transition: 'color 0.3s',
+    fontFamily: 'JejuMyeongjo, serif',
+    fontWeight: 'bold',
+    marginLeft: '5px', // 왼쪽 간격 3px
+    marginRight: '5px', // 오른쪽 간격 3px
 };
 
 export default TopNav;
